@@ -1,26 +1,24 @@
 package com.svalero.LeagueAPI.dto;
-import com.svalero.LeagueAPI.domain.Team;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StadiumInDto {
+public class TeamInDto {
 
-    @NotNull(message = "Stadium name is obligatory.")
+    @NotNull(message = "Team name is obligatory.")
     private String name;
-    private LocalDate constructionDate;
-    private Boolean adaptedAccess;
-    private float latitude;
-    private float longitude;
-    private List<Long> teamId;
+    private LocalDate foundationDate;
+    private Boolean areChampions;
+    @PositiveOrZero(message = "The lowest score is zero.")
+    private int leaguePoints;
 
 }
