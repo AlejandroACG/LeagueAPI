@@ -17,6 +17,7 @@ public class TeamService {
     private TeamRepository teamRepository;
     @Autowired
     private ModelMapper modelMapper;
+    private static final String ENTITY = "Team";
 
     public List<TeamOutDto> getTeams(String name) {
         List<Team> teamList;
@@ -43,7 +44,25 @@ public class TeamService {
         if (teamOptional.isPresent()) {
             return modelMapper.map(teamOptional.get(), TeamOutDto.class);
         } else {
-            throw new EntityNotFoundException("Team", id);
+            throw new EntityNotFoundException(ENTITY, id);
+        }
+    }
+
+    public TeamOutDto updateTeam(long id, TeamInDto teamInDto) {
+        Optional<Team> teamOptional = teamRepository.findById(id);
+        if (teamOptional.isPresent()) {
+            Team team = modelMapper.map(teamInDto, Team.class);
+            return modelMapper.map(teamRepository.save(team), TeamOutDto.class);
+        } else {
+            throw new EntityNotFoundException(ENTITY, id);
+        }
+    }
+
+    public void deleteTeam(long id) {
+        if (teamRepository.existsById(id)) {
+            teamRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(ENTITY, id);
         }
     }
 }
