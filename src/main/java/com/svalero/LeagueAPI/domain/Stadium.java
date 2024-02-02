@@ -29,5 +29,5 @@ public class Stadium {
     @ManyToOne
     @JoinColumn(name = "stadium_id")
     @JsonBackReference
-    private List<Team> teams;
+    private Team team;
 }

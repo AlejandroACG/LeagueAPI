@@ -39,19 +39,13 @@ public class StadiumService {
 
     public StadiumOutDto addStadium(StadiumInDto stadiumInDto) {
         Stadium stadium = modelMapper.map(stadiumInDto, Stadium.class);
+        Long teamId = stadiumInDto.getTeamId();
 
-        List<Long> teamIds = stadiumInDto.getTeamIds();
-        if (teamIds.isEmpty()) {
-            stadium.getTeams().clear();
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        if (teamOptional.isPresent()) {
+            stadium.setTeam(teamOptional.get());
         } else {
-            for (long teamId : teamIds) {
-                Optional<Team> teamOptional = teamRepository.findById(teamId);
-                if (teamOptional.isPresent()) {
-                    stadium.getTeams().add(teamOptional.get());
-                } else {
-                    throw new EntityNotFoundException("Team", teamId);
-                }
-            }
+            throw new EntityNotFoundException("Team", teamId);
         }
         return modelMapper.map(stadiumRepository.save(stadium), StadiumOutDto.class);
     }
@@ -70,20 +64,12 @@ public class StadiumService {
         if (stadiumOptional.isPresent()) {
             Stadium stadium =stadiumOptional.get();
             modelMapper.map(stadiumInDto, stadium);
-            List<Long> teamIds = stadiumInDto.getTeamIds();
-            if (teamIds.isEmpty()) {
-                stadium.getTeams().clear();
+            Long teamId = stadiumInDto.getTeamId();
+            Optional<Team> teamOptional = teamRepository.findById(teamId);
+            if (teamOptional.isPresent()) {
+                stadium.setTeam(teamOptional.get());
             } else {
-                List<Team> teams = new ArrayList<>();
-                for (long teamId : teamIds) {
-                    Optional<Team> teamOptional = teamRepository.findById(teamId);
-                    if (teamOptional.isPresent()) {
-                        teams.add(teamOptional.get());
-                    } else {
-                        throw new EntityNotFoundException("Team", id);
-                    }
-                }
-                stadium.setTeams(teams);
+                throw new EntityNotFoundException("Team", id);
             }
             return modelMapper.map(stadiumRepository.save(stadium), StadiumOutDto.class);
         } else {

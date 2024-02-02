@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "teams")
-
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,7 @@ public class Team {
     private Boolean areChampions;
     @Column(name = "league_points")
     private int leaguePoints;
-    @OneToMany(mappedBy = "teams")
+    @OneToMany(mappedBy = "team")
     @JsonManagedReference
     private List<Stadium> stadiums;
 }
