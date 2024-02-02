@@ -24,7 +24,7 @@ public class Team {
     private Boolean areChampions;
     @Column(name = "league_points")
     private int leaguePoints;
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Stadium> stadiums;
 }
