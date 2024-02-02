@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamInDto {
-
     @NotNull(message = "Team name is obligatory.")
     private String name;
     private LocalDate foundationDate;

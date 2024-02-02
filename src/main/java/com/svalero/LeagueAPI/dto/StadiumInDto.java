@@ -3,8 +3,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StadiumInDto {
-
     @NotNull(message = "Stadium name is obligatory.")
     private String name;
     private LocalDate constructionDate;

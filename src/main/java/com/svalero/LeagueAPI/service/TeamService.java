@@ -2,13 +2,14 @@ package com.svalero.LeagueAPI.service;
 import com.svalero.LeagueAPI.domain.Team;
 import com.svalero.LeagueAPI.dto.TeamInDto;
 import com.svalero.LeagueAPI.dto.TeamOutDto;
+import com.svalero.LeagueAPI.exception.EntityNotFoundException;
 import com.svalero.LeagueAPI.repository.TeamRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -33,6 +34,16 @@ public class TeamService {
     }
 
     public TeamOutDto addTeam(TeamInDto teamInDto) {
+        Team team = modelMapper.map(teamInDto, Team.class);
+        return modelMapper.map(teamRepository.save(team), TeamOutDto.class);
+    }
 
+    public TeamOutDto getTeamById(long id) {
+        Optional<Team> teamOptional = teamRepository.findById(id);
+        if (teamOptional.isPresent()) {
+            return modelMapper.map(teamOptional.get(), TeamOutDto.class);
+        } else {
+            throw new EntityNotFoundException("Team", id);
+        }
     }
 }
