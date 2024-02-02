@@ -19,5 +19,5 @@ public class StadiumOutDto {
     private Boolean adaptedAccess;
     private float latitude;
     private float longitude;
-    private List<Team> teams;
+    private Team team;
 }
