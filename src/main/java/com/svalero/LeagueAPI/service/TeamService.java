@@ -1,5 +1,6 @@
 package com.svalero.LeagueAPI.service;
 import com.svalero.LeagueAPI.domain.Team;
+import com.svalero.LeagueAPI.dto.TeamInDto;
 import com.svalero.LeagueAPI.dto.TeamOutDto;
 import com.svalero.LeagueAPI.repository.TeamRepository;
 import org.modelmapper.ModelMapper;
@@ -29,5 +30,9 @@ public class TeamService {
             teamOutDtoList.add(modelMapper.map(team, TeamOutDto.class));
         }
         return teamOutDtoList;
+    }
+
+    public TeamOutDto addTeam(TeamInDto teamInDto) {
+
     }
 }

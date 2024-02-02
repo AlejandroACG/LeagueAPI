@@ -1,5 +1,4 @@
 package com.svalero.LeagueAPI.dto;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -20,5 +19,4 @@ public class TeamInDto {
     private Boolean areChampions;
     @PositiveOrZero(message = "The lowest score is zero.")
     private int leaguePoints;
-
 }

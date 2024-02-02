@@ -1,6 +1,4 @@
 package com.svalero.LeagueAPI.dto;
-import com.svalero.LeagueAPI.domain.Team;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +19,5 @@ public class StadiumInDto {
     private Boolean adaptedAccess;
     private float latitude;
     private float longitude;
-    private List<Long> teamId;
-
+    private List<Long> teamIds;
 }
