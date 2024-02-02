@@ -1,10 +1,8 @@
 package com.svalero.LeagueAPI.domain;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,17 +15,17 @@ import java.util.List;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private long id;
     @Column
     private String name;
-    @Column
+    @Column(name = "foundation_date")
     private LocalDate foundationDate;
-    @Column
-    private Boolean areChampion;
-    @Column
+    @Column(name = "are_champions")
+    private Boolean areChampions;
+    @Column(name = "league_points")
     private int leaguePoints;
 
-
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "teams")
     private List<Stadium> stadiums;
 }
