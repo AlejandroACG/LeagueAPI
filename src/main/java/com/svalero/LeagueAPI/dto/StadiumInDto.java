@@ -3,10 +3,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +15,6 @@ public class StadiumInDto {
     private Boolean adaptedAccess;
     private float latitude;
     private float longitude;
-    @NonNull
+    @NotNull(message = "teamId is obligatory.")
     private Long teamId;
 }
