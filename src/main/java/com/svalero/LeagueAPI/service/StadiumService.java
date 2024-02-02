@@ -62,7 +62,7 @@ public class StadiumService {
     public StadiumOutDto updateStadium(long id, StadiumInDto stadiumInDto) {
         Optional<Stadium> stadiumOptional = stadiumRepository.findById(id);
         if (stadiumOptional.isPresent()) {
-            Stadium stadium =stadiumOptional.get();
+            Stadium stadium = stadiumOptional.get();
             modelMapper.map(stadiumInDto, stadium);
             Long teamId = stadiumInDto.getTeamId();
             Optional<Team> teamOptional = teamRepository.findById(teamId);

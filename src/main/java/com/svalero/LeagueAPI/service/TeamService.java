@@ -51,7 +51,8 @@ public class TeamService {
     public TeamOutDto updateTeam(long id, TeamInDto teamInDto) {
         Optional<Team> teamOptional = teamRepository.findById(id);
         if (teamOptional.isPresent()) {
-            Team team = modelMapper.map(teamInDto, Team.class);
+            Team team = teamOptional.get();
+            modelMapper.map(teamInDto, team);
             return modelMapper.map(teamRepository.save(team), TeamOutDto.class);
         } else {
             throw new EntityNotFoundException(ENTITY, id);
