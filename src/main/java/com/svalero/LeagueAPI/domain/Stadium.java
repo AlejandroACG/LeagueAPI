@@ -1,4 +1,5 @@
 package com.svalero.LeagueAPI.domain;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +28,6 @@ public class Stadium {
     private float longitude;
     @ManyToOne
     @JoinColumn(name = "stadium_id")
+    @JsonBackReference
     private List<Team> teams;
 }
