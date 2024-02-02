@@ -1,0 +1,509 @@
+openapi: 3.0.1
+info:
+  title: League API
+  description: API that list football teams data and their stadiums.
+  version: 1.0.0
+servers:
+  - url: 'localhost/8080'
+
+tags:
+  - name: teams
+    description: Operations to work with the football teams' data.
+  - name: stadiums
+    description: Operations to work with the stadiums' data
+
+paths:
+  /teams:
+    get:
+      tags:
+        - teams
+      summary: Returns a list of football teams.
+      description: This operation returns a football teams' list. It also returns partial matches.
+      parameters:
+        - name: name
+          in: query
+          description: Team name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the complete list of football teams.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamOutDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - teams
+      summary: Adds a new football team.
+      description: Allows to add a new football team.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamInDTO'
+      responses:
+        '201':
+          description: New team has been registered.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamInDTO'
+        '400':
+          description: Validation error on input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /teams/{id}:
+    get:
+      tags:
+        - teams
+      summary: Return a team by id.
+      description: This operation returns a football team using its id.
+      parameters:
+        - name: id
+          in: path
+          description: Team id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Returns a unique football team information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamOutDTO'
+        '400':
+          description: Validation error on input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+
+        '404':
+          description: Information not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - teams
+      summary: Delete a team by its ID.
+      description: This operation deletes a team using its ID.
+      parameters:
+        - name: id
+          in: path
+          description: Team id
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Information deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '404':
+          description: Information not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - teams
+      summary: Update a team by its ID.
+      description: This operation updates a team using its ID.
+      parameters:
+        - name: id
+          in: path
+          description: Team id
+          required: true
+          schema:
+            type: number
+        - name: team_data
+          in: query
+          description: Updated team data
+          required: true
+          schema:
+            $ref: '#/components/schemas/TeamInDTO'
+      responses:
+        '200':
+          description: Team updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamOutDTO'
+        '400':
+          description: Validation error on input data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Information not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /stadium:
+    get:
+      tags:
+        - stadiums
+      summary: Returns a list of stadiums.
+      description: This operation returns a stadiums list. It also returns partial matches.
+      parameters:
+        - name: name
+          in: query
+          description: Stadium name
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the complete list of stadiums.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamOutDTO'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - stadiums
+      summary: Adds a new stadium.
+      description: Allows to add a stadium.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StadiumInDTO'
+      responses:
+        '201':
+          description: New team has been registered.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamInDTO'
+        '400':
+          description: Validation error on input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /stadium/{id}:
+    get:
+      tags:
+        - stadiums
+      summary: Return a stadium by id.
+      description: This operation returns a stadium using its id.
+      parameters:
+        - name: id
+          in: path
+          description: Stadium id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Returns a unique stadium information.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StadiumOutDTO'
+        '400':
+          description: Validation error on input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+
+        '404':
+          description: Information not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - stadiums
+      summary: Delete a stadium by its ID.
+      description: This operation deletes a stadium using its ID.
+      parameters:
+        - name: id
+          in: path
+          description: Stadium id
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Information deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '404':
+          description: Information not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - stadiums
+      summary: Update a team by its ID.
+      description: This operation updates a stadium using its ID.
+      parameters:
+        - name: id
+          in: path
+          description: Stadium id
+          required: true
+          schema:
+            type: number
+        - name: team_data
+          in: query
+          description: Updated stadium data
+          required: true
+          schema:
+            $ref: '#/components/schemas/StadiumInDTO'
+      responses:
+        '200':
+          description: Stadium updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StadiumOutDTO'
+        '400':
+          description: Validation error on input data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Information not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    TeamOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 12
+          description: Team identifier.
+        name:
+          type: string
+          example: Real Zaragoza
+          description: Team name
+        foundationDate:
+          type: string
+          example: 1932-03-18
+          description: Team foundation date
+        areChampions:
+          type: boolean
+          description: Declares if the team has ever won the League.
+        leaguePoints:
+          type: number
+          format: int32
+          description: Score of the team in the League's leaderboard.
+        stadiums:
+          type: array
+          items:
+            $ref: '#/components/schemas/StadiumOutDTO'
+    TeamInDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Real Zaragoza
+          description: Team name
+        foundationDate:
+          type: string
+          example: 1932-03-18
+          description: Team foundation date
+        areChampions:
+          type: boolean
+          description: Declares if the team has ever won the League.
+        leaguePoints:
+          type: number
+          format: int32
+          description: Score of the team in the League's leaderboard.
+    StadiumOutDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 2
+          description: Stadium identifier.
+        name:
+          type: string
+          example: La Romareda
+          description: Stadium name
+        constructionDate:
+          type: string
+          example: 1957-9-8
+          description: Construction date
+        adaptedAccess:
+          type: boolean
+          description: Inform if the stadium is adapted for disabled people
+        latitude:
+          type: number
+          example: 41.635974884033
+          format: float
+        longitude:
+          type: number
+          example: -0.9018229842186
+          format: float
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamOutDTO'
+    StadiumInDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: La Romareda
+          description: Stadium name
+        constructionDate:
+          type: string
+          example: 1957-9-8
+          description: Construction date
+        adaptedAccess:
+          type: boolean
+          description: Inform if the stadium is adapted for disabled people
+        latitude:
+          type: number
+          example: 41.635974884033
+          format: float
+        longitude:
+          type: number
+          example: -0.9018229842186
+          format: float
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          format: int32
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+    NoContent:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 204
+        message: No Content
+
+    BadRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 400
+        message: Validation error
+    NotFound:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 404
+        message: Not found
+
+    InternalServerError:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 500
+        message: Internal Server Error
+        error: [ ]
